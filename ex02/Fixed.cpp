@@ -13,12 +13,10 @@ Fixed &Fixed::operator=(const Fixed& other)
         this->_value = other._value;
 	return *this;
 }
-
 Fixed::Fixed( const int value )
 {
 	this->_value = value << 8;
 }
-
 Fixed::Fixed( const float value )
 {
 	this->_value = roundf(value * 256);
@@ -41,7 +39,8 @@ Fixed Fixed::operator-(const Fixed& other) const
 Fixed Fixed::operator*(const Fixed& other) const
 {
 	Fixed result;
-	result._value =(this->_value * other._value) >> 8;
+	long long temp = ((long long)this->_value * other._value);
+	result._value = temp >> 8;
 	return result;
 }
 Fixed Fixed::operator/(const Fixed& other) const
@@ -60,27 +59,22 @@ bool Fixed::operator<(const Fixed& other) const
 {
 	return (this->_value < other._value);
 }
-
 bool Fixed::operator>=(const Fixed& other) const
 {
 	return (this->_value >= other._value);
 }
-
 bool Fixed::operator<=(const Fixed& other) const
 {
 	return (this->_value <= other._value);
 }
-
 bool Fixed::operator==(const Fixed& other) const
 {
 	return (this->_value == other._value);
 }
-
 bool Fixed::operator!=(const Fixed& other) const
 {
 		return (this->_value != other._value);
 }
-
 Fixed& Fixed::operator++()
 {
 	this->_value++;
@@ -105,7 +99,6 @@ Fixed Fixed::operator--(int)
 	this->_value--;
 	return temp;
 }
-
 Fixed& Fixed::min( Fixed& a, Fixed& b )
 {
 	return (a < b) ? a : b;
@@ -130,7 +123,6 @@ float Fixed::toFloat( void ) const
 {
 	return (_value / 256.0f);
 }
-
 std::ostream & operator<<( std::ostream & o, Fixed const & i )
 {
 	return (o << i.toFloat());
